@@ -1,6 +1,6 @@
 aliyun:
-    bucketName: zz-super-bucket
-    accessKeyId: LTAI5tHY12upkFof2aqGXCWL
-    accessKeySecret: fKF3tQ64lQQI68Xytg9SdNEBbMoJPD
+    bucketName: yourbucketname
+    accessKeyId: yourkey
+    accessKeySecret: yourpassword
     endpoint: http://oss-cn-guangzhou.aliyuncs.com
     urlPrefix: http://zz-super-bucket.oss-cn-guangzhou.aliyuncs.com
