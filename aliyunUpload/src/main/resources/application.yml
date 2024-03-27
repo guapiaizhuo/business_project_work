@@ -20,8 +20,8 @@ spring:
     active: dev
 
 aliyun:
-  bucketName: zz-super-bucket
-  accessKeyId: LTAI5tHY12upkFof2aqGXCWL
-  accessKeySecret: fKF3tQ64lQQI68Xytg9SdNEBbMoJPD
+  bucketName: your-bucket
+  accessKeyId: your-id
+  accessKeySecret: your-key
   endpoint: https://oss-cn-guangzhou.aliyuncs.com
-  urlPrefix: https://zz-super-bucket.oss-cn-guangzhou.aliyuncs.com
+  urlPrefix: https://your-bucket.oss-cn-guangzhou.aliyuncs.com
