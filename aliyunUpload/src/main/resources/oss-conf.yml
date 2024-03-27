@@ -3,4 +3,4 @@ aliyun:
     accessKeyId: yourkey
     accessKeySecret: yourpassword
     endpoint: http://oss-cn-guangzhou.aliyuncs.com
-    urlPrefix: http://zz-super-bucket.oss-cn-guangzhou.aliyuncs.com
+    urlPrefix: http://your-bucket.oss-cn-guangzhou.aliyuncs.com
