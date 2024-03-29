@@ -1,5 +1,6 @@
 package com.OSSUpload.service;
 
+import com.OSSUpload.config.AliyunConfig;
 import com.OSSUpload.model.OSSResult;
 import com.aliyun.oss.model.OSSObjectSummary;
 import jakarta.servlet.ServletOutputStream;

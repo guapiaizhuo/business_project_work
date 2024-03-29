@@ -61,7 +61,8 @@ public class OSServiceImpl implements OSService {
         fileUploadResult.setStatus("done");
         fileUploadResult.setResponse("success");
         //this.aliyunConfig.getUrlPrefix() + filePath 文件路径需要保存到数据库
-        fileUploadResult.setName(this.aliyunConfig.getUrlPrefix() + filePath);
+        System.out.println(this.aliyunConfig.getUrlPrefix() + filePath);
+        fileUploadResult.setName(this.aliyunConfig.getUrlPrefix() +"/"+ filePath);
         fileUploadResult.setUid(String.valueOf(System.currentTimeMillis()));
         return fileUploadResult;
     }

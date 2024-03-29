@@ -5,15 +5,28 @@
     <title>oss文件管理</title>
     <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.11.2/jquery.js"></script>
     <script type="text/javascript">
-        var pre = 'http://zz-super-bucket.oss-cn-guangzhou.aliyuncs.com';
+        var pre;
+        var currentUrl = window.location.protocol+"//"+ window.location.host
         $(function () {
+            getEndPoint();
             listfile();
         });
+
+        //获取oss endpoint地址
+        function getEndPoint(){
+            $.ajax({
+                url: currentUrl+ "/file/getEndPoint",
+                type: 'GET',
+                success: function (rtn){
+                    pre = rtn.url
+                }
+            })
+        }
 
         //文件列表
         function listfile() {
             $.ajax({
-                url: "http://localhost:4001/file/list",
+                url: currentUrl+"/file/list",
                 type: 'POST',
                 success: function (rtn) {
                     console.log(rtn.length);
@@ -28,7 +41,7 @@
         function downloadfile(src) {
 
             var fileName = src.split(pre)[1];
-            window.location.href = "http://localhost:4001/file/download?fileName=" + fileName;
+            window.location.href = currentUrl + "/file/download?fileName=" + fileName;
         }
 
         //文件删除
@@ -36,7 +49,7 @@
             var fileName = src.split(pre)[1];
             var param = {fileName: fileName};
             $.ajax({
-                url: "http://localhost:4001/file/delete",
+                url: currentUrl + "/file/delete",
                 data: param,
                 success: function () {
                     alert('删除成功',fileName);

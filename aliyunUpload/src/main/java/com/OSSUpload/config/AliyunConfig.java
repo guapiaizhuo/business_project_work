@@ -6,18 +6,20 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@RefreshScope
 @ConfigurationProperties(prefix = "aliyun")
 @Data
 public class AliyunConfig {
-//    accessKeyId: LTAI5tHY12upkFof2aqGXCWL
-//    accessKeySecret: fKF3tQ64lQQI68Xytg9SdNEBbMoJPD
+//    accessKeyId:
+//    accessKeySecret:
 //    endpoint: http://oss-cn-chengdu.aliyuncs.com
-//    urlPrefix: http://zz-super-bucket.oss-cn-guangzhou.aliyuncs.com
+//    urlPrefix: bucket.oss-cn-guangzhou.aliyuncs.com
     private String bucketName;
     private String accessKeyId;
     private String accessKeySecret;

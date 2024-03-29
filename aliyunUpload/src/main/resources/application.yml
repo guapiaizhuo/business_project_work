@@ -6,22 +6,21 @@ spring:
     name: AliyunUpload-service
   cloud:
     nacos:
+      server-addr: 127.0.0.1:8848
       config:
-        import-check:
-          enabled: false
-        server-addr: 127.0.0.1:8848
-        extension-configs: yaml
+        username: nacos
+        password: nacos
+        refresh-enabled: true
+        context-path: /nacos
       discovery:
         username: nacos
         password: nacos
-        namespace: bb3ea73f-111d-4c49-a0db-efa2f1b29126
-
-  profiles:
-    active: dev
-
-aliyun:
-  bucketName: zz-super-bucket
-  accessKeyId: LTAI5tHY12upkFof2aqGXCWL
-  accessKeySecret: fKF3tQ64lQQI68Xytg9SdNEBbMoJPD
-  endpoint: https://oss-cn-guangzhou.aliyuncs.com
-  urlPrefix: https://zz-super-bucket.oss-cn-guangzhou.aliyuncs.com
+  config:
+    import:
+      - optional:nacos:aliyun-oss.yml
+#aliyun:
+#  bucket-name: 1
+#  access-key-id: 2
+#  access-key-secret: 3
+#  endpoint: 4
+#  url-prefix: 5
