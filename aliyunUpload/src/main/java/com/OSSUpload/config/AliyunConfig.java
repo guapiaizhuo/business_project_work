@@ -14,10 +14,10 @@ import org.springframework.context.annotation.PropertySource;
 @ConfigurationProperties(prefix = "aliyun")
 @Data
 public class AliyunConfig {
-//    accessKeyId: LTAI5tHY12upkFof2aqGXCWL
-//    accessKeySecret: fKF3tQ64lQQI68Xytg9SdNEBbMoJPD
+//    accessKeyId: 
+//    accessKeySecret: 
 //    endpoint: http://oss-cn-chengdu.aliyuncs.com
-//    urlPrefix: http://zz-super-bucket.oss-cn-guangzhou.aliyuncs.com
+//    urlPrefix: http://-bucket.oss-cn-guangzhou.aliyuncs.com
     private String bucketName;
     private String accessKeyId;
     private String accessKeySecret;
