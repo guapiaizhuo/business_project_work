@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface OSService {
-    OSSResult upload(MultipartFile uploadFile);
+    OSSResult upload(MultipartFile uploadFile,String id);
 
     OSSResult delete(String objectName);
 

@@ -32,10 +32,10 @@ public class UploadController {
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
-    public OSSResult upload(@RequestPart("file") MultipartFile uploadFile)
+    public OSSResult upload(@RequestPart("file") MultipartFile uploadFile,@RequestParam("id") String id)
             throws Exception {
 //        System.out.println(uploadFile.getOriginalFilename());
-        return this.fileUploadService.upload(uploadFile);
+        return this.fileUploadService.upload(uploadFile,id);
     }
 
     /**

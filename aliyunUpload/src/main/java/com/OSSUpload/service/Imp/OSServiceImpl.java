@@ -29,7 +29,7 @@ public class OSServiceImpl implements OSService {
     @Autowired
     private AliyunConfig aliyunConfig;
 
-    public OSSResult upload(MultipartFile uploadFile){
+    public OSSResult upload(MultipartFile uploadFile,String id){
         // 校验图片格式
         boolean isLegal = false;
         for (String type : IMAGE_TYPE) {
@@ -47,9 +47,7 @@ public class OSServiceImpl implements OSService {
         }
         //文件新路径
         String fileName = uploadFile.getOriginalFilename();
-        System.out.println(fileName);
-        String filePath = getFilePath(fileName);
-        System.out.println(filePath);
+        String filePath = getFilePath(fileName,id);
         // 上传到阿里云
         try {
             ossClient.putObject(aliyunConfig.getBucketName(), filePath, new
@@ -76,11 +74,11 @@ public class OSServiceImpl implements OSService {
      * @desc 生成路径以及文件名 例如：//images/2019/04/28/15564277465972939.jpg
      * @email gaojun56@163.com
      */
-    private String getFilePath(String sourceFileName) {
+    private String getFilePath(String sourceFileName,String id) {
         DateTime dateTime = new DateTime();
         return "images/" + dateTime.toString("yyyy")
                 + "/" + dateTime.toString("MM") + "/"
-                + dateTime.toString("dd") + "/" +sourceFileName;
+                + dateTime.toString("dd") + "/" +id+sourceFileName;
     }
 
     /**

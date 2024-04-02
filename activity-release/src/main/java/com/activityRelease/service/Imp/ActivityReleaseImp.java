@@ -39,7 +39,7 @@ public class ActivityReleaseImp extends ServiceImpl<ActivityMapper, ActivityInfo
             //        OSSResult OSSUpload = restTemplate.getForObject("http://AliyunUpload-service/file/upload", OSSResult.class);
             for (MultipartFile multipartFile:files) {
                 OSSFileNameInfo ossFileNameInfo = new OSSFileNameInfo();
-                OSSResult ossResult = aliyunUploadService.upload(multipartFile);
+                OSSResult ossResult = aliyunUploadService.upload(multipartFile,activityInfo.getId().toString());
                 ossFileNameInfo.setId(activityInfo.getId());
                 System.out.println(ossFileNameInfo.getId());
                 ossFileNameInfo.setPictureUrl(ossResult.getUrl());
@@ -52,6 +52,7 @@ public class ActivityReleaseImp extends ServiceImpl<ActivityMapper, ActivityInfo
 
         }
         catch (Exception E){
+            System.out.println(E);
             throw new RuntimeException();
         }
     }

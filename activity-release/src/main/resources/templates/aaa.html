@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>创建活动</title>
     <script>
-        function submitActivity() {
+        async function submitActivity() {
             var formData = new FormData();
+            const showResult = document.getElementById("showResult")
             // const activityData = {
             //     name: document.getElementById('name').value, // 替换为实际的值
             //     description: document.getElementById('description').value, // 替换为实际的值
@@ -34,15 +35,16 @@
             }
 
             try {
-                const response = fetch('http://localhost:4000/activity/createActivity', {
+                const response = await fetch('http://localhost:4000/activity/createActivity', {
                     method: 'POST',
                     body: formData
                 });
-                const data = response.text();
-                alert(data);
+                showResult.innerText = '创建成功'
             } catch (error) {
                 console.error('Error:', error);
-                alert('发送请求失败');
+                const data = response.text();
+                showResult.innerText = '创建失败'
+                alert('发送请求失败\n'+data);
             }
         }
     </script>
@@ -65,6 +67,7 @@
     <label for="file_upload">上传图片:</label><br>
     <input id="file_upload" type="file" name="file" multiple/><br>　　<!-- 定义change事件,选择文件后触发 -->
     <input type="submit" value="提交">
+    <h2 id="showResult" style="color: palevioletred"></h2>
 </form>
 </body>
 </html>
