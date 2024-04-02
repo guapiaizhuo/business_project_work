@@ -47,12 +47,14 @@ public class OSServiceImpl implements OSService {
         }
         //文件新路径
         String fileName = uploadFile.getOriginalFilename();
+        System.out.println(fileName);
         String filePath = getFilePath(fileName);
+        System.out.println(filePath);
         // 上传到阿里云
         try {
             ossClient.putObject(aliyunConfig.getBucketName(), filePath, new
                     ByteArrayInputStream(uploadFile.getBytes()));
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             //上传失败
             fileUploadResult.setStatus("error");
@@ -60,9 +62,11 @@ public class OSServiceImpl implements OSService {
         }
         fileUploadResult.setStatus("done");
         fileUploadResult.setResponse("success");
+        String url = this.aliyunConfig.getUrlPrefix() +"/"+ filePath;
+        fileUploadResult.setUrl(url);
         //this.aliyunConfig.getUrlPrefix() + filePath 文件路径需要保存到数据库
-        System.out.println(this.aliyunConfig.getUrlPrefix() + filePath);
-        fileUploadResult.setName(this.aliyunConfig.getUrlPrefix() +"/"+ filePath);
+        System.out.println(url);
+        fileUploadResult.setName(url);
         fileUploadResult.setUid(String.valueOf(System.currentTimeMillis()));
         return fileUploadResult;
     }
@@ -76,9 +80,7 @@ public class OSServiceImpl implements OSService {
         DateTime dateTime = new DateTime();
         return "images/" + dateTime.toString("yyyy")
                 + "/" + dateTime.toString("MM") + "/"
-                + dateTime.toString("dd") + "/" + System.currentTimeMillis() +
-                RandomUtils.nextInt(100, 9999) + "." +
-                StringUtils.substringAfterLast(sourceFileName, ".");
+                + dateTime.toString("dd") + "/" +sourceFileName;
     }
 
     /**

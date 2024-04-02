@@ -6,10 +6,9 @@ import com.OSSUpload.service.OSService;
 import com.aliyun.oss.model.OSSObjectSummary;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -31,10 +30,11 @@ public class UploadController {
      * @return FileUploadResult
      * @Param uploadFile
      */
-    @RequestMapping("/upload")
+    @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
-    public OSSResult upload(@RequestParam("file") MultipartFile uploadFile)
+    public OSSResult upload(@RequestPart("file") MultipartFile uploadFile)
             throws Exception {
+//        System.out.println(uploadFile.getOriginalFilename());
         return this.fileUploadService.upload(uploadFile);
     }
 

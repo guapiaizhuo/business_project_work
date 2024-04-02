@@ -1,52 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>创建活动</title>
-  <script>
-    async function submitActivity() {
-      const activityData = {
-        name: document.getElementById('name').value,
-        description: document.getElementById('description').value,
-        publisher: document.getElementById('publisher').value,
-        numberOfParticipants: parseInt(document.getElementById('numberOfParticipants').value, 10),
-        time: document.getElementById('time').value,
-        location: document.getElementById('location').value
-      };
+    <meta charset="UTF-8">
+    <title>创建活动</title>
+    <script>
+        function submitActivity() {
+            var formData = new FormData();
+            // const activityData = {
+            //     name: document.getElementById('name').value, // 替换为实际的值
+            //     description: document.getElementById('description').value, // 替换为实际的值
+            //     publisher: document.getElementById('publisher').value,
+            //     numberOfParticipants: document.getElementById('numberOfParticipants').value,
+            //     time: document.getElementById('time').value,
+            //     location: document.getElementById('location').value,
+            //
+            // };
+            formData.append('name', document.getElementById('name').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('publisher', document.getElementById('publisher').value);
+            formData.append('numberOfParticipants', document.getElementById('numberOfParticipants').value);
+            formData.append('time', document.getElementById('time').value);
+            formData.append('location', document.getElementById('location').value);
+            var fileInput = document.getElementById('file_upload');
+            for (var i = 0; i < fileInput.files.length; i++) {
+                var fileName = fileInput.files[i].name
+                var fileSubstring = fileName.substring(fileName.lastIndexOf('.'))
+                if (fileSubstring == '.bmp' || fileSubstring == '.jpg' || fileSubstring == '.jpeg' || fileSubstring == '.gif' || fileSubstring == '.png') {
+                    formData.append('files', fileInput.files[i]);
+                } else {
+                    alert('文件"' + fileName + '"' + "不支持上传")
+                    return;
+                }
+            }
 
-      try {
-        const response = await fetch('http://localhost:4000/activity/createActivity', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(activityData)
-        });
-        const data = await response.text();
-        alert(data);
-      } catch (error) {
-        console.error('Error:', error);
-        alert('发送请求失败');
-      }
-    }
-  </script>
+            try {
+                const response = fetch('http://localhost:4000/activity/createActivity', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = response.text();
+                alert(data);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('发送请求失败');
+            }
+        }
+    </script>
 </head>
 <body>
 <h2>创建活动</h2>
 <form onsubmit="event.preventDefault(); submitActivity();">
-  <label for="name">活动名:</label><br>
-  <input type="text" id="name" name="name"><br>
-  <label for="description">活动描述:</label><br>
-  <textarea id="description" name="description"></textarea><br>
-  <label for="publisher">活动发布者:</label><br>
-  <input type="text" id="publisher" name="publisher"><br>
-  <label for="numberOfParticipants">活动人数:</label><br>
-  <input type="number" id="numberOfParticipants" name="numberOfParticipants"><br>
-  <label for="time">活动时间:</label><br>
-  <input type="datetime-local" id="time" name="time"><br>
-  <label for="location">活动地点:</label><br>
-  <input type="text" id="location" name="location"><br>
-  <input type="submit" value="提交">
+    <label for="name">活动名:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <label for="description">活动描述:</label><br>
+    <textarea id="description" name="description"></textarea><br>
+    <label for="publisher">活动发布者:</label><br>
+    <input type="text" id="publisher" name="publisher"><br>
+    <label for="numberOfParticipants">活动人数:</label><br>
+    <input type="number" id="numberOfParticipants" name="numberOfParticipants"><br>
+    <label for="time">活动时间:</label><br>
+    <input type="datetime-local" id="time" name="time"><br>
+    <label for="location">活动地点:</label><br>
+    <input type="text" id="location" name="location"><br>
+    <label for="file_upload">上传图片:</label><br>
+    <input id="file_upload" type="file" name="file" multiple/><br>　　<!-- 定义change事件,选择文件后触发 -->
+    <input type="submit" value="提交">
 </form>
 </body>
 </html>

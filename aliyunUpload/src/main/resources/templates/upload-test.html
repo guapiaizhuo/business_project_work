@@ -17,7 +17,7 @@
                     url: 'upload',//上传地址
                     type: 'POST',
                     cache: false,
-                    data: new FormData($('#uploadForm')[0]),//表单数据
+                    data: new FormData($('#uploadForm')[0]), //表单数据
                     processData: false,
                     contentType: false,
                     success: function (rtn) {
@@ -36,7 +36,7 @@
 </head>
 <body>
 <form id="uploadForm" enctype="multipart/form-data">　　<!-- 声明文件上传 -->
-    <input id="file_upload" type="file" name="file"/>　　<!-- 定义change事件,选择文件后触发 -->
+    <input id="file_upload" type="file" name="file" multiple/>　　<!-- 定义change事件,选择文件后触发 -->
     <br/><span style="color: red" id="fileTypeError"></span>　　　　<!-- 文件类型错误回显,此处通过前后端两次验证文件类型 -->
     <br/><input type="button" onclick="uploadfile()" value="上传">
 </form>

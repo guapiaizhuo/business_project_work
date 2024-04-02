@@ -15,7 +15,6 @@ spring:
         username: nacos
         password: nacos
         namespace: bb3ea73f-111d-4c49-a0db-efa2f1b29126
-
   profiles:
     active: dev
 
@@ -24,4 +23,5 @@ spring:
     url: jdbc:mysql://localhost:3306/test-activity?useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: 123456
+table: activities
 

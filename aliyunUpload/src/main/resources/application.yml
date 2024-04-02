@@ -15,6 +15,7 @@ spring:
       discovery:
         username: nacos
         password: nacos
+        namespace: bb3ea73f-111d-4c49-a0db-efa2f1b29126
   config:
     import:
       - optional:nacos:aliyun-oss.yml

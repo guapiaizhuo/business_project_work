@@ -1,4 +1,4 @@
-package com.OSSUpload.model;
+package com.activityRelease.model;
 
 import lombok.Data;
 
