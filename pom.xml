@@ -7,6 +7,7 @@
         <module>stock</module>
         <module>activity-release</module>
         <module>aliyunUpload</module>
+        <module>activityDetails</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

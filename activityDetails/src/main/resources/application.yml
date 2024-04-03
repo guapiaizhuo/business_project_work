@@ -1,22 +1,21 @@
 server:
-  port: 4000
+  port: 4002
 
 spring:
   application:
-    name: activity-service
+    name: ShowDetails-service
   cloud:
     nacos:
+      server-addr: 127.0.0.1:8848
       config:
-        import-check:
-          enabled: false
-        server-addr: 127.0.0.1:8848
-        extension-configs: yaml
+        username: nacos
+        password: nacos
+        refresh-enabled: true
+        context-path: /nacos
       discovery:
         username: nacos
         password: nacos
         namespace: bb3ea73f-111d-4c49-a0db-efa2f1b29126
-  profiles:
-    active: dev
   config:
     import:
       - optional:activity-database-dev.yml
