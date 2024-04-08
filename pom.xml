@@ -8,6 +8,7 @@
         <module>activity-release</module>
         <module>aliyunUpload</module>
         <module>activityDetails</module>
+        <module>activitySignUp</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

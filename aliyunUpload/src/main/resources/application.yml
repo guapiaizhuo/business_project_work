@@ -11,6 +11,8 @@ spring:
         username: nacos
         password: nacos
         refresh-enabled: true
+        namespace: bb3ea73f-111d-4c49-a0db-efa2f1b29126
+        extension-configs: yaml
         context-path: /nacos
       discovery:
         username: nacos

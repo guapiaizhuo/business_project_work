@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Activity Search Display</title>
+    <style>
+        .activity-list-item {
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .activity-details {
+            margin-top: 20px;
+        }
+        .activity-image {
+            max-width: 300px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <label for="searchInput">Search Activity:</label>
+    <input type="text" id="searchInput">
+    <button onclick="searchActivities()">Search</button>
+</div>
+<div id="activityList" class="activity-list"></div>
+<div id="activityDetails" class="activity-details"></div>
+<img id="activityImage" class="activity-image" src="" alt="Activity Image" style="display:none;">
+
+<script>
+    let srcList = {};
+    async function searchActivities() {
+        const name = document.getElementById('searchInput').value;
+        fetch(`/activity/searchName?name=${encodeURIComponent(name)}`)
+            .then(response => response.json())
+            .then(async activities => {
+                const activityListDiv = document.getElementById('activityList');
+                activityListDiv.innerHTML = ''; // Clear out the previous results
+                for (const activity of activities) {
+                    await showDetails(activity.id)
+                    console.log(activity.id)
+                    const activityDiv = document.createElement('div');
+                    activityDiv.classList.add('activity-list-item');
+                    console.log(activity.id.toString())
+                    activityDiv.innerHTML = `
+                            <img src="${geturl(activity.id.toString())}">
+                            <strong>Id:</strong> ${activity.id} <br>
+                            <strong>Name:</strong> ${activity.name} <br>
+                            <strong>Description:</strong> ${activity.description} <br>
+                            <strong>Publisher:</strong> ${activity.publisher} <br>
+                            <strong>Participants:</strong> ${activity.numberOfParticipants}
+                        `;
+                    console.log(activity.id)
+                    activityListDiv.appendChild(activityDiv);
+                }
+            }).catch(error => {
+            console.error('Error fetching activities:', error);
+        });
+    }
+
+    function geturl(id) {
+        try {
+            return srcList[id][0]['pictureUrl']
+        }
+        catch (E) {
+            console.log(E)
+            return null
+        }
+    }
+
+    async function showDetails(id) {
+        fetch(`/activity/showDetails?id=${id}`)
+            .then(response => response.json())
+            .then(async data => {
+                let list = [];
+                for (const pic of data) {
+                    list.push(pic)
+                }
+                await srcList[id] = list
+            })
+    }
+</script>
+</body>
+</html>
