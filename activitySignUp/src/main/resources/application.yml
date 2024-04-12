@@ -1,0 +1,30 @@
+server:
+  port: 4003
+  address: 192.168.0.193
+
+spring:
+  application:
+    name: activity-signUp
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      config:
+        username: nacos
+        password: nacos
+        context-path: /nacos
+        namespace: bb3ea73f-111d-4c49-a0db-efa2f1b29126
+        file-extension: yaml
+      discovery:
+        username: nacos
+        password: nacos
+        namespace: bb3ea73f-111d-4c49-a0db-efa2f1b29126
+  config:
+    import:
+      - optional:nacos:activity-database-dev.yml?namespace=dev&refreshEnabled=true
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/test-activity?useSSL=false&serverTimezone=GMT%2B8
+#    username: root
+#    password: 123456
+table: activities
+
