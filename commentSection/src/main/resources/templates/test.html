@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async Requests with Random studentId</title>
+</head>
+<body>
+<h2>Async Requests with Random studentId</h2>
+<button id="sendRequestsBtn">Send Async Requests</button>
+<script>
+  let index = 1;
+  document.getElementById('sendRequestsBtn').addEventListener('click', () => {
+    sendBulkAsyncRequests(15); // 一次执行50个异步请求
+  });
+
+  // 生成随机 studentId
+  function generateRandomStudentId(length) {
+    let result = '';
+    const characters = '0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  async function sendRequest(port) {
+    const startTime = Date.now(); // 记录请求开始时间
+    const activityId = '1772205878677348354';
+    const studentId = '1635176401';
+    const context = 'ascccc'
+    const url = `http://192.168.131.136:${port}/comment/commit?activityId=${activityId}&userId=${studentId}&comment=${context}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.text();
+      const endTime = Date.now(); // 记录请求结束时间
+      const elapsedTime = endTime - startTime; // 计算经过的时间
+      console.log(index);
+      index++;
+      console.log(`Response from port ${port} for userId ${studentId}:`, data);
+      console.log(`Request to port ${port} for userId ${studentId} took ${elapsedTime} ms.`);
+    } catch (error) {
+      const endTime = Date.now();
+      const elapsedTime = endTime - startTime;
+      console.error(`Error from port ${port} for studentId ${studentId}:`, error);
+      console.error(`Failed request to port ${port} for userId ${studentId} took ${elapsedTime} ms.`);
+    }
+  }
+
+  async function sendBulkAsyncRequests(concurrentRequests) {
+    const startTime = Date.now(); // 记录批量请求开始时间
+    const promises = [];
+    for (let i = 0; i < concurrentRequests; i++) {
+      promises.push(sendRequest(4005));
+    }
+
+    try {
+      // 等待所有请求完成
+      await Promise.all(promises);
+      const endTime = Date.now(); // 记录批量请求结束时间
+      const elapsedTime = endTime - startTime; // 计算批量请求总耗时
+      console.log('All requests have been sent.');
+      console.log(`All requests took ${elapsedTime} ms.`);
+    } catch (error) {
+      console.error('An error occurred:', error);
+    }
+  }
+</script>
+</body>
+</html>

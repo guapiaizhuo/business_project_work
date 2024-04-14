@@ -1,9 +1,9 @@
 server:
-  port: 4003
+  port: 4005
 
 spring:
   application:
-    name: activity-signUp
+    name: activity-commit-comment
   cloud:
     nacos:
       server-addr: 127.0.0.1:8848
@@ -14,7 +14,7 @@ spring:
         namespace: bb3ea73f-111d-4c49-a0db-efa2f1b29126
         file-extension: yaml
         extension-configs[0]:
-          dataId: server-address-dev.yml
+          name:server-address-dev.yml
       discovery:
         username: nacos
         password: nacos

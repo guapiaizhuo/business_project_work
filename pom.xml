@@ -9,6 +9,7 @@
         <module>aliyunUpload</module>
         <module>activityDetails</module>
         <module>activitySignUp</module>
+        <module>commentSection</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
