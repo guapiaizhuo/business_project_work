@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活动信息展示</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<h1>活动信息</h1>
+<table id="activitiesTable">
+    <thead>
+    <tr>
+        <th>活动id</th>
+        <th>活动名称</th>
+        <th>描述</th>
+        <th>发布者</th>
+        <th>参与者数量</th>
+        <th>时间</th>
+        <th>地点</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="activitiesBody">
+    <!-- 活动数据将通过JavaScript动态填充 -->
+    </tbody>
+</table>
+<div id="pagination">
+    <button id="prevPage">上一页</button>
+    <span id="currentPage">1</span>
+    <button id="nextPage">下一页</button>
+</div>
+
+<div id="detailsModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="imagesContainer"></div>
+    </div>
+</div>
+
+<script>
+    let currentPage = 1;
+
+    function fetchActivities(page) {
+        fetch(`http://127.0.0.1:4002/activity/showPage?page=${page}`)
+            .then(response => response.text()) // 先获取文本数据
+            .then(text => {
+                // 使用正则表达式或其他逻辑检测和替换长整型数字字符串
+                const updatedText = text.replace(/"id":(\d+)/g, '"id":"$1"');
+                return JSON.parse(updatedText);
+            })
+            .then(data => {
+                const tableBody = document.getElementById('activitiesBody');
+                tableBody.innerHTML = '';
+                data.forEach(activity => {
+                    // 现在id已经是字符串类型，可以安全使用
+                    const row = `<tr>
+                    <td>${activity.id}</td>
+                    <td>${activity.name}</td>
+                    <td>${activity.description}</td>
+                    <td>${activity.publisher}</td>
+                    <td>${activity.numberOfParticipants}</td>
+                    <td>${activity.time}</td>
+                    <td>${activity.location}</td>
+                    <td><button onclick='showDetails("${activity.id}")'>详情</button></td>
+                </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+
+    function showDetails(id) {
+        // 确保URL中的id参数被正确编码，尤其是如果它是一个字符串
+        const encodedId = encodeURIComponent(id);
+        fetch(`http://127.0.0.1:4002/activity/showDetails?id=${encodedId}`)
+            .then(response => response.json())
+            .then(data => {
+                const imagesContainer = document.getElementById('imagesContainer');
+                imagesContainer.innerHTML = ''; // 清空内容
+                data.forEach(item => {
+                    const imageElement = `<img src="${item.pictureUrl}" class="modal-image">`;
+                    imagesContainer.innerHTML += imageElement;
+                });
+                document.getElementById('detailsModal').style.display = 'block';
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+
+    document.getElementById('prevPage').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            let page = document.getElementById("currentPage");
+            page.innerText = currentPage;
+            fetchActivities(currentPage);
+        }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', () => {
+        currentPage++;
+        let page = document.getElementById("currentPage");
+        page.innerText = currentPage;
+        fetchActivities(currentPage);
+    });
+
+    const modal = document.getElementById('detailsModal');
+    const closeSpan = document.getElementsByClassName("close")[0];
+    closeSpan.onclick = function () {
+        modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    fetchActivities(currentPage);
+</script>
+</body>
+
+</html>

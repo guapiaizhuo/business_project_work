@@ -10,6 +10,8 @@
         <module>activityDetails</module>
         <module>activitySignUp</module>
         <module>commentSection</module>
+        <module>offer</module>
+        <module>login</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

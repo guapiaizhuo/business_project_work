@@ -65,4 +65,15 @@ public class ActivityDetailsController {
             return null;
     }
 
+    @RequestMapping("/showPage")
+    @ResponseBody
+    public List<ActivityInfo> showPage(@RequestParam long page){
+        return getActivityNameList.getPage(page);
+    }
+
+    @RequestMapping("/show")
+    public String show(){
+        return "activity-show";
+    }
+
 }
